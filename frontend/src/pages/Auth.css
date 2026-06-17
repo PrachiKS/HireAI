@@ -1,0 +1,271 @@
+.auth__container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0f4ff;
+  padding: 20px;
+}
+
+.auth__box {
+  display: flex;
+  width: 100%;
+  max-width: 900px;
+  min-height: 580px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(79, 70, 229, 0.15);
+}
+
+/* ─── Left Side ─── */
+.auth__left {
+  flex: 1;
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  padding: 50px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth__left-content h1 {
+  font-size: 32px;
+  font-weight: 800;
+  color: white;
+  margin-bottom: 10px;
+}
+
+.auth__left-content h1 span {
+  color: #c4b5fd;
+}
+
+.auth__left-content > p {
+  color: rgba(255,255,255,0.8);
+  font-size: 16px;
+  margin-bottom: 40px;
+}
+
+.auth__features {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.auth__feature {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.auth__feature span {
+  font-size: 24px;
+  width: 45px;
+  height: 45px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth__feature p {
+  color: white;
+  font-size: 15px;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* ─── Right Side ─── */
+.auth__right {
+  flex: 1;
+  background: white;
+  padding: 50px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth__form-box {
+  width: 100%;
+  max-width: 360px;
+}
+
+.auth__form-box h2 {
+  font-size: 28px;
+  font-weight: 800;
+  color: #111;
+  margin-bottom: 8px;
+}
+
+.auth__subtitle {
+  color: #888;
+  font-size: 15px;
+  margin-bottom: 25px;
+}
+
+.auth__error {
+  background: #fef2f2;
+  color: #dc2626;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-bottom: 15px;
+  border: 1px solid #fecaca;
+}
+
+/* ─── Role Selector ─── */
+.role__selector {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.role__btn {
+  flex: 1;
+  padding: 10px;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  background: white;
+  color: #555;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.role__btn.active {
+  border-color: #4f46e5;
+  background: #ede9fe;
+  color: #4f46e5;
+}
+
+/* ─── Form ─── */
+.form__group {
+  margin-bottom: 18px;
+}
+
+.form__group label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 6px;
+}
+
+.form__group input {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 15px;
+  color: #333;
+  transition: border-color 0.3s;
+  outline: none;
+}
+
+.form__group input:focus {
+  border-color: #4f46e5;
+}
+
+.form__forgot {
+  text-align: right;
+  margin-bottom: 18px;
+}
+
+.form__forgot a {
+  color: #4f46e5;
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.auth__btn {
+  width: 100%;
+  padding: 13px;
+  background: #4f46e5;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.auth__btn:hover {
+  background: #3730a3;
+  transform: translateY(-1px);
+}
+
+.auth__btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* ─── Divider ─── */
+.auth__divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.auth__divider::before,
+.auth__divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #e5e7eb;
+}
+
+.auth__divider span {
+  color: #aaa;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+/* ─── Google Button ─── */
+.auth__google {
+  width: 100%;
+  padding: 12px;
+  background: white;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #333;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.3s;
+}
+
+.auth__google:hover {
+  border-color: #4f46e5;
+  background: #f8f9ff;
+}
+
+/* ─── Switch ─── */
+.auth__switch {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+  color: #666;
+}
+
+.auth__switch a {
+  color: #4f46e5;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 768px) {
+  .auth__left {
+    display: none;
+  }
+
+  .auth__right {
+    padding: 40px 25px;
+  }
+}
