@@ -8,6 +8,9 @@ import rateLimit from 'express-rate-limit'
 import { fileURLToPath } from 'url'
 import { dirname, join } from 'path'
 
+// import routs
+import authRoute from './routes/auth.js'
+
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 dotenv.config({ path: join(__dirname, '.env') })
@@ -38,6 +41,9 @@ app.use(cors(corsOptions))
 // Middleware
 app.use(express.json())
 app.use(cookieParser())
+
+// Routes
+app.use('/api/v1/auth', authRoute)
 
 // Home route
 app.get('/', (req, res) => {
