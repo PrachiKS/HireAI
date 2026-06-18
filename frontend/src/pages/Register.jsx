@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { AUTH_URL } from '../utils/config'
 import './Auth.css'
 
 const Register = () => {
@@ -11,6 +12,7 @@ const Register = () => {
   })
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const navigate = useNavigate()
 
   const handleChange = (e) => {
     setUserData({ ...userData, [e.target.name]: e.target.value })
@@ -22,11 +24,26 @@ const Register = () => {
     setError('')
 
     try {
-      // API call will be added when backend auth is ready
-      console.log('Register data:', userData)
-      setLoading(false)
+      const res = await fetch(`${AUTH_URL}/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify(userData)
+      })
+
+      const data = await res.json()
+
+      if (!data.success) {
+        setError(data.message)
+        setLoading(false)
+        return
+      }
+
+      // Redirect to login after successful registration
+      navigate('/login')
+
     } catch (err) {
-      setError(err.message)
+      setError('Something went wrong. Please try again.')
       setLoading(false)
     }
   }
@@ -117,7 +134,7 @@ const Register = () => {
                 <input
                   type='password'
                   name='password'
-                  placeholder='Min 6 characters'
+                  placeholder='Min 6 chars, 1 uppercase, 1 number'
                   value={userData.password}
                   onChange={handleChange}
                   required
