@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
+import { AUTH_URL } from '../utils/config'
 import './Auth.css'
 
 const Login = () => {
@@ -7,8 +9,9 @@ const Login = () => {
     email: '',
     password: ''
   })
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
+
+  const { loading, error, dispatch } = useAuth()
+  const navigate = useNavigate()
 
   const handleChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value })
@@ -16,16 +19,46 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    setLoading(true)
-    setError('')
+    dispatch({ type: 'LOGIN_START' })
 
     try {
-      // API call will be added when backend auth is ready
-      console.log('Login credentials:', credentials)
-      setLoading(false)
+      const res = await fetch(`${AUTH_URL}/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify(credentials)
+      })
+
+      const data = await res.json()
+
+      if (!data.success) {
+        dispatch({ type: 'LOGIN_FAILURE', payload: data.message })
+        return
+      }
+
+      dispatch({
+        type: 'LOGIN_SUCCESS',
+        payload: {
+          user: data.data,
+          token: data.token,
+          role: data.role
+        }
+      })
+
+      // Redirect based on role
+      if (data.role === 'recruiter') {
+        navigate('/recruiter/dashboard')
+      } else if (data.role === 'admin') {
+        navigate('/admin/dashboard')
+      } else {
+        navigate('/')
+      }
+
     } catch (err) {
-      setError(err.message)
-      setLoading(false)
+      dispatch({
+        type: 'LOGIN_FAILURE',
+        payload: 'Something went wrong. Please try again.'
+      })
     }
   }
 
