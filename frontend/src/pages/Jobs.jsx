@@ -45,9 +45,10 @@ const Jobs = () => {
     }
   }
 
-  useEffect(() => {
-    fetchJobs()
-  }, [filters.page])
+useEffect(() => {
+  fetchJobs()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [filters.page])
 
   const handleSearch = (e) => {
     e.preventDefault()
