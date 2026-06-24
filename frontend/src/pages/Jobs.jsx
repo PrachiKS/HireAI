@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import { JOBS_URL } from '../utils/config'
 import './Jobs.css'
@@ -18,7 +18,7 @@ const Jobs = () => {
   })
 
   // ✅ Fetch jobs from backend
-  const fetchJobs = async () => {
+  const fetchJobs = useCallback(async () => {
     setLoading(true)
     setError(null)
     try {
@@ -43,12 +43,11 @@ const Jobs = () => {
     } finally {
       setLoading(false)
     }
-  }
+  }, [filters]) 
 
 useEffect(() => {
-  fetchJobs()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-}, [filters.page])
+    fetchJobs()
+  }, [fetchJobs])
 
   const handleSearch = (e) => {
     e.preventDefault()
