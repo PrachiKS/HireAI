@@ -11,6 +11,7 @@ import { dirname, join } from 'path'
 // import routs
 import authRoute from './routes/auth.js'
 import jobRoute from './routes/jobs.js'
+import applicationRoute from './routes/application.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -49,7 +50,7 @@ app.use(cookieParser())
 // Routes
 app.use('/api/v1/auth', authRoute)
 app.use('/api/v1/jobs', jobRoute)
-
+app.use('/api/v1/applications', applicationRoute)
 // Home route
 app.get('/', (req, res) => {
     res.status(200).json({
