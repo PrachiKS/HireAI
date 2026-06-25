@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { JOBS_URL } from '../utils/config'
+import { JOBS_URL, APPLICATIONS_URL} from '../utils/config'
 import './JobDetail.css'
 
 const JobDetail = () => {
@@ -14,6 +14,9 @@ const JobDetail = () => {
   const [error, setError] = useState(null)
   const [applying, setApplying] = useState(false)
   const [applied, setApplied] = useState(false)
+  const [coverLetter, setCoverLetter] = useState('')
+  const [showCoverLetter, setShowCoverLetter] = useState(false)
+  const [applyError, setApplyError] = useState('')
 
   // Fetch job details
   useEffect(() => {
@@ -37,17 +40,41 @@ const JobDetail = () => {
     fetchJob()
   }, [id])
 
-  const handleApply = () => {
+  const handleApply = async () => {
     if (!user) {
       navigate('/login')
       return
     }
-    // Application logic will be added in next feature
+    setShowCoverLetter(true)
+  }
+
+  const submitApplication = async () => {
     setApplying(true)
-    setTimeout(() => {
+    setApplyError('')
+    try {
+      const res = await fetch(`${APPLICATIONS_URL}/apply/${id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        },
+        credentials: 'include',
+        body: JSON.stringify({ coverLetter })
+      })
+
+      const data = await res.json()
+
+      if (data.success) {
+        setApplied(true)
+        setShowCoverLetter(false)
+      } else {
+        setApplyError(data.message)
+      }
+    } catch (err) {
+      setApplyError('Failed to submit application. Please try again.')
+    } finally {
       setApplying(false)
-      setApplied(true)
-    }, 1500)
+    }
   }
 
   if (loading) {
@@ -193,18 +220,47 @@ const JobDetail = () => {
               )}
             </div>
 
+            {showCoverLetter && !applied && (
+              <div className='coverletter__form'>
+                <label>Cover Letter (Optional)</label>
+                <textarea
+                  placeholder='Write a short cover letter...'
+                  value={coverLetter}
+                  onChange={e => setCoverLetter(e.target.value)}
+                  rows={4}
+                />
+                {applyError && (
+                  <p className='apply__error'>{applyError}</p>
+                )}
+                <button
+                  className='apply__btn'
+                  onClick={submitApplication}
+                  disabled={applying}
+                >
+                  {applying ? 'Submitting...' : 'Submit Application 🚀'}
+                </button>
+                <button
+                  className='cancel__btn'
+                  onClick={() => setShowCoverLetter(false)}
+                >
+                  Cancel
+                </button>
+              </div>
+            )}
+
             {applied ? (
               <div className='apply__success'>
-                    Application Submitted!
+                ✅ Application Submitted!
               </div>
             ) : (
-              <button
-                className='apply__btn'
-                onClick={handleApply}
-                disabled={applying}
-              >
-                {applying ? 'Submitting...' : user ? 'Apply Now 🚀' : 'Login to Apply'}
-              </button>
+              !showCoverLetter && (
+                <button
+                  className='apply__btn'
+                  onClick={handleApply}
+                >
+                  {user ? 'Apply Now 🚀' : 'Login to Apply'}
+                </button>
+              )
             )}
 
             {!user && (
