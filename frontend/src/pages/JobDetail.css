@@ -357,6 +357,63 @@
   color: #4f46e5;
 }
 
+/* ─── Cover Letter Form ─── */
+.coverletter__form {
+  margin-bottom: 15px;
+}
+
+.coverletter__form label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.coverletter__form textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #333;
+  resize: vertical;
+  outline: none;
+  margin-bottom: 10px;
+  font-family: inherit;
+}
+
+.coverletter__form textarea:focus {
+  border-color: #4f46e5;
+}
+
+.apply__error {
+  color: #dc2626;
+  font-size: 13px;
+  margin-bottom: 10px !important;
+  background: #fef2f2;
+  padding: 8px 12px;
+  border-radius: 6px;
+}
+
+.cancel__btn {
+  width: 100%;
+  padding: 10px;
+  background: white;
+  color: #666;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: all 0.3s;
+}
+
+.cancel__btn:hover {
+  border-color: #dc2626;
+  color: #dc2626;
+}
+
 /* ─── Responsive ─── */
 @media (max-width: 968px) {
   .jobdetail__page {
