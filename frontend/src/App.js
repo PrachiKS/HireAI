@@ -10,6 +10,7 @@ import Register from './pages/Register'
 import Jobs from './pages/Jobs'
 import JobDetail from './pages/JobDetail'
 import Dashboard from './pages/Dashboard'
+import RecruiterDashboard from './pages/RecruiterDashboard'
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path='/jobs' element={<Jobs />} />
         <Route path='/jobs/:id' element={<JobDetail />} />
         <Route path='/dashboard' element={<Dashboard />} />
+        <Route path='/recruiter/dashboard' element={<RecruiterDashboard />} />
       </Routes>
     </BrowserRouter>
   )
