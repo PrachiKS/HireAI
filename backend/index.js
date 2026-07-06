@@ -14,12 +14,17 @@ import jobRoute from './routes/jobs.js'
 import applicationRoute from './routes/application.js'
 import aiRoute from './routes/ai.js'
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
-dotenv.config({ path: join(__dirname, '.env') })
+if (process.env.NODE_ENV !== 'production') {
+  const __filename = fileURLToPath(import.meta.url)
+  const __dirname = dirname(__filename)
+  dotenv.config({ path: join(__dirname, '.env') })
+}
 
 const app = express()
 const port = process.env.PORT || 5000
+
+// Trust proxy for Render deployment
+app.set('trust proxy', 1)
 
 // Security
 app.use(helmet())
