@@ -26,10 +26,6 @@ if (process.env.NODE_ENV !== 'production') {
   }
 }
 
-console.log('NODE_ENV:', process.env.NODE_ENV)
-console.log('MONGO_URI exists:', !!process.env.MONGO_URI)
-console.log('GROQ_API_KEY exists:', !!process.env.GROQ_API_KEY)
-
 const app = express()
 const port = process.env.PORT || 5000
 
