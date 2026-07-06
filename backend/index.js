@@ -14,11 +14,21 @@ import jobRoute from './routes/jobs.js'
 import applicationRoute from './routes/application.js'
 import aiRoute from './routes/ai.js'
 
+// ✅ Load .env file only in development
 if (process.env.NODE_ENV !== 'production') {
-  const __filename = fileURLToPath(import.meta.url)
-  const __dirname = dirname(__filename)
-  dotenv.config({ path: join(__dirname, '.env') })
+  try {
+    const __filename = fileURLToPath(import.meta.url)
+    const __dirname = dirname(__filename)
+    dotenv.config({ path: join(__dirname, '.env') })
+    console.log('Loaded local .env file ✅')
+  } catch (err) {
+    console.log('No .env file found')
+  }
 }
+
+console.log('NODE_ENV:', process.env.NODE_ENV)
+console.log('MONGO_URI exists:', !!process.env.MONGO_URI)
+console.log('GROQ_API_KEY exists:', !!process.env.GROQ_API_KEY)
 
 const app = express()
 const port = process.env.PORT || 5000
