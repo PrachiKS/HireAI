@@ -11,7 +11,7 @@ import Jobs from './pages/Jobs'
 import JobDetail from './pages/JobDetail'
 import Dashboard from './pages/Dashboard'
 import RecruiterDashboard from './pages/RecruiterDashboard'
-import AITools from './pages/AIToools'
+import AITools from './pages/AITools'
 
 function App() {
   return (
