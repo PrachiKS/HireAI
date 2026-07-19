@@ -11,6 +11,7 @@ import Jobs from './pages/Jobs'
 import JobDetail from './pages/JobDetail'
 import Dashboard from './pages/Dashboard'
 import RecruiterDashboard from './pages/RecruiterDashboard'
+import AITools from './pages/AITools'
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path='/jobs/:id' element={<JobDetail />} />
         <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/recruiter/dashboard' element={<RecruiterDashboard />} />
+        <Route path='/ai-tools' element={<AITools />} />
       </Routes>
     </BrowserRouter>
   )
