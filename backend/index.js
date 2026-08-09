@@ -13,6 +13,7 @@ import authRoute from './routes/auth.js'
 import jobRoute from './routes/jobs.js'
 import applicationRoute from './routes/application.js'
 import aiRoute from './routes/ai.js'
+import homeRoute from './routes/home.js'
 
 // ✅ Load .env file only in development
 if (process.env.NODE_ENV !== 'production') {
@@ -64,6 +65,8 @@ app.use('/api/v1/auth', authRoute)
 app.use('/api/v1/jobs', jobRoute)
 app.use('/api/v1/applications', applicationRoute)
 app.use('/api/v1/ai', aiRoute)
+app.use('/api/v1/home', homeRoute)  
+
 // Home route
 app.get('/', (req, res) => {
     res.status(200).json({
