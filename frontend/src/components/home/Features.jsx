@@ -5,7 +5,7 @@ import { useAuth } from '../../context/AuthContext'
 const Features = ({ featuresData }) => {
 
   const navigate = useNavigate()
-  const { user, role } = useAuth()
+  const { user } = useAuth()
 
   const handleFeatureClick = (feature) => {
 
