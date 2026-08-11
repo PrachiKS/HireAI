@@ -1,8 +1,47 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import Features from '../components/home/Features'
 import './Home.css'
 
 const Home = () => {
+    const featuresData = [
+    {
+      title: 'AI Resume Reviewer',
+      icon: '📄',
+      description:
+        'Upload your resume and get instant AI feedback, score, and improvement suggestions.'
+    },
+    {
+      title: 'AI Cover Letter',
+      icon: '✍️',
+      description:
+        'Generate a personalized cover letter for any job in seconds using AI.'
+    },
+    {
+      title: 'AI Job Matching',
+      icon: '🎯',
+      description:
+        'See your match percentage for each job based on your skills and experience.'
+    },
+    {
+      title: 'Top Companies',
+      icon: '🏢',
+      description:
+        "Apply to jobs from India's top startups and product companies directly."
+    },
+    {
+      title: 'One Click Apply',
+      icon: '⚡',
+      description:
+        'Apply to multiple jobs with one click. Track all your applications in one place.'
+    },
+    {
+      title: 'Smart Dashboard',
+      icon: '📊',
+      description:
+        'Track your applications, interviews, and offers in a beautiful dashboard.'
+    }
+  ]
   return (
     <div>
       {/* ─── Hero Section ─── */}
@@ -81,51 +120,9 @@ const Home = () => {
         </div>
       </section>
 
-      {/* ─── Features Section ─── */}
-      <section className='features'>
-        <h2>Why Choose <span>HireAI?</span></h2>
-        <p className='features__subtitle'>
-          Smart tools to help you land your dream job faster
-        </p>
-        <div className='features__grid'>
-          <div className='feature__card'>
-            <span className='feature__icon'>📄</span>
-            <h3>AI Resume Reviewer</h3>
-            <p>Upload your resume and get instant AI feedback, 
-            score, and improvement suggestions.</p>
-          </div>
-          <div className='feature__card'>
-            <span className='feature__icon'>✍️</span>
-            <h3>AI Cover Letter</h3>
-            <p>Generate a personalized cover letter for any 
-            job in seconds using AI.</p>
-          </div>
-          <div className='feature__card'>
-            <span className='feature__icon'>🎯</span>
-            <h3>AI Job Matching</h3>
-            <p>See your match percentage for each job based 
-            on your skills and experience.</p>
-          </div>
-          <div className='feature__card'>
-            <span className='feature__icon'>🏢</span>
-            <h3>Top Companies</h3>
-            <p>Apply to jobs from India's top startups and 
-            product companies directly.</p>
-          </div>
-          <div className='feature__card'>
-            <span className='feature__icon'>⚡</span>
-            <h3>One Click Apply</h3>
-            <p>Apply to multiple jobs with one click. 
-            Track all your applications in one place.</p>
-          </div>
-          <div className='feature__card'>
-            <span className='feature__icon'>📊</span>
-            <h3>Smart Dashboard</h3>
-            <p>Track your applications, interviews, and 
-            offers in a beautiful dashboard.</p>
-          </div>
-        </div>
-      </section>
+            {/* ─── Features Section ─── */}
+      <Features featuresData={featuresData} />
+     
 
       {/* ─── CTA Section ─── */}
       <section className='cta'>
