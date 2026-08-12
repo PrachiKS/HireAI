@@ -36,7 +36,7 @@ const Navbar = () => {
       <ul className={`navbar__links ${isOpen ? 'active' : ''}`}>
         <li><NavLink to='/'>Home</NavLink></li>
         <li><NavLink to='/jobs'>Jobs</NavLink></li>
-        <li><NavLink to='/ai-tools'>AI Tools</NavLink></li>
+        <li><NavLink to='/ai-tools'>🤖 AI Tools</NavLink></li>
         {user && role === 'jobseeker' && (
           <li><NavLink to='/dashboard'>Dashboard</NavLink></li>
         )}
