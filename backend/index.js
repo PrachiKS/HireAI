@@ -13,25 +13,13 @@ import authRoute from './routes/auth.js'
 import jobRoute from './routes/jobs.js'
 import applicationRoute from './routes/application.js'
 import aiRoute from './routes/ai.js'
-import homeRoute from './routes/home.js'
 
-// ✅ Load .env file only in development
-if (process.env.NODE_ENV !== 'production') {
-  try {
-    const __filename = fileURLToPath(import.meta.url)
-    const __dirname = dirname(__filename)
-    dotenv.config({ path: join(__dirname, '.env') })
-    console.log('Loaded local .env file ✅')
-  } catch (err) {
-    console.log('No .env file found')
-  }
-}
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
+dotenv.config({ path: join(__dirname, '.env') })
 
 const app = express()
 const port = process.env.PORT || 5000
-
-// Trust proxy for Render deployment
-app.set('trust proxy', 1)
 
 // Security
 app.use(helmet())
@@ -65,8 +53,6 @@ app.use('/api/v1/auth', authRoute)
 app.use('/api/v1/jobs', jobRoute)
 app.use('/api/v1/applications', applicationRoute)
 app.use('/api/v1/ai', aiRoute)
-app.use('/api/v1/home', homeRoute)  
-
 // Home route
 app.get('/', (req, res) => {
     res.status(200).json({

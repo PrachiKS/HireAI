@@ -1,29 +1,161 @@
 import React from 'react'
-import Hero from '../components/home/Hero'
+import { Link } from 'react-router-dom'
 import Features from '../components/home/Features'
-import CTA from '../components/home/CTA'
-import Footer from '../components/home/Footer';
-import useHome from '../hooks/useHome'
 import './Home.css'
 
-
 const Home = () => {
-  const { homeData, loading, error } = useHome()
-
-  console.log('Home Data:', homeData)
-  console.log('Home Loading:', loading)
-  console.log('Home Error:', error)
-
+    const featuresData = [
+    {
+      title: 'AI Resume Reviewer',
+      icon: '📄',
+      description:
+        'Upload your resume and get instant AI feedback, score, and improvement suggestions.'
+    },
+    {
+      title: 'AI Cover Letter',
+      icon: '✍️',
+      description:
+        'Generate a personalized cover letter for any job in seconds using AI.'
+    },
+    {
+      title: 'AI Job Matching',
+      icon: '🎯',
+      description:
+        'See your match percentage for each job based on your skills and experience.'
+    },
+    {
+      title: 'Top Companies',
+      icon: '🏢',
+      description:
+        "Apply to jobs from India's top startups and product companies directly."
+    },
+    {
+      title: 'One Click Apply',
+      icon: '⚡',
+      description:
+        'Apply to multiple jobs with one click. Track all your applications in one place.'
+    },
+    {
+      title: 'Smart Dashboard',
+      icon: '📊',
+      description:
+        'Track your applications, interviews, and offers in a beautiful dashboard.'
+    }
+  ]
   return (
     <div>
-      <Hero
-        heroData={homeData?.hero}
-        statsData={homeData?.stats}
-        featuredJobs={homeData?.featuredJobs}
-      />
-      <Features featuresData={homeData?.features} />
-      <CTA ctaData={homeData?.cta} />
-      <Footer footerData={homeData?.footer} />
+      {/* ─── Hero Section ─── */}
+      <section className='hero'>
+        <div className='hero__content'>
+          <span className='hero__badge'>🤖 AI-Powered Job Board</span>
+          <h1 className='hero__title'>
+            Find Your Dream Job with <span>AI Assistance</span>
+          </h1>
+          <p className='hero__subtitle'>
+            HireAI matches you with the perfect job using AI. 
+            Get your resume reviewed, cover letter generated, 
+            and match score calculated — all in one place!
+          </p>
+          <div className='hero__buttons'>
+            <Link to='/jobs' className='btn__primary'>
+              Browse Jobs
+            </Link>
+            <Link to='/register' className='btn__secondary'>
+              Post a Job
+            </Link>
+          </div>
+          <div className='hero__stats'>
+            <div className='stat'>
+              <h3>500+</h3>
+              <p>Jobs Posted</p>
+            </div>
+            <div className='stat'>
+              <h3>200+</h3>
+              <p>Companies</p>
+            </div>
+            <div className='stat'>
+              <h3>1000+</h3>
+              <p>Candidates</p>
+            </div>
+            <div className='stat'>
+              <h3>95%</h3>
+              <p>Success Rate</p>
+            </div>
+          </div>
+        </div>
+        <div className='hero__image'>
+          <div className='hero__card'>
+            <div className='hero__card-header'>
+              <span>🤖 AI Job Match</span>
+              <span className='match__score'>95% Match</span>
+            </div>
+            <div className='hero__card-job'>
+              <h4>Senior React Developer</h4>
+              <p>Google · Bangalore · ₹25-40 LPA</p>
+              <div className='skills'>
+                <span>React.js</span>
+                <span>Node.js</span>
+                <span>MongoDB</span>
+              </div>
+            </div>
+            <div className='hero__card-job'>
+              <h4>Full Stack Developer</h4>
+              <p>Swiggy · Remote · ₹15-25 LPA</p>
+              <div className='skills'>
+                <span>MERN</span>
+                <span>AWS</span>
+                <span>Docker</span>
+              </div>
+            </div>
+            <div className='hero__card-job'>
+              <h4>Frontend Engineer</h4>
+              <p>Razorpay · Pune · ₹12-20 LPA</p>
+              <div className='skills'>
+                <span>React</span>
+                <span>TypeScript</span>
+                <span>CSS</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+            {/* ─── Features Section ─── */}
+      <Features featuresData={featuresData} />
+     
+
+      {/* ─── CTA Section ─── */}
+      <section className='cta'>
+        <h2>Ready to Find Your Dream Job?</h2>
+        <p>Join thousands of candidates who found their perfect role with HireAI</p>
+        <div className='cta__buttons'>
+          <Link to='/register' className='btn__primary'>
+            Get Started Free
+          </Link>
+          <Link to='/jobs' className='btn__outline'>
+            Browse Jobs
+          </Link>
+        </div>
+      </section>
+
+      {/* ─── Footer ─── */}
+      <footer className='footer'>
+        <div className='footer__content'>
+          <div className='footer__logo'>
+            Hire<span>AI</span> 🤖
+          </div>
+          <p>AI-powered job board connecting talent with opportunity</p>
+          <div className='footer__links'>
+            <Link to='/jobs'>Jobs</Link>
+            <Link to='/about'>About</Link>
+            <Link to='/login'>Login</Link>
+            <Link to='/register'>Register</Link>
+          </div>
+          <p className='footer__copy'>
+            © 2026 HireAI. Built by Prachi Sonawane
+          </p>
+        </div>
+      </footer>
     </div>
   )
 }
