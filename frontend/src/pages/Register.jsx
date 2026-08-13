@@ -5,19 +5,22 @@ import RecruiterForm from '../components/auth/RecruiterForm'
 import './Auth.css'
 
 const Register = () => {
-  const location = useLocation()
-  const searchParams = new URLSearchParams(location.search)
-  const initialRole = searchParams.get('role') === 'recruiter' ? 'recruiter' : 'jobseeker'
+ const location = useLocation()
 
-  const [activeRole, setActiveRole] = useState(initialRole)
+  // 1. Initialize state by reading the URL once
+  const [activeRole, setActiveRole] = useState(() => {
+    const params = new URLSearchParams(location.search)
+    return params.get('role') === 'recruiter' ? 'recruiter' : 'jobseeker'
+  })
 
+  // 2. Keep synced if the URL changes, depending safely on the string location.search
   useEffect(() => {
-    const roleFromUrl = searchParams.get('role')
+    const params = new URLSearchParams(location.search)
+    const roleFromUrl = params.get('role')
     if (roleFromUrl) {
       setActiveRole(roleFromUrl === 'recruiter' ? 'recruiter' : 'jobseeker')
     }
-  }, [location])
-
+  }, [location.search]) // 👈 Safely depending on the search string
   return (
     <div className='auth__container auth__container--register'>
       <div className='auth__box auth__box--single'>
