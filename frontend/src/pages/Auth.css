@@ -259,6 +259,43 @@
   text-decoration: none;
 }
 
+/* ─── Single Column Register Layout Adjustments ─── */
+.auth__container--register {
+  /* Ensures the single form centers nicely with extra breathing room for scrolling */
+  padding: 40px 20px;
+}
+
+.auth__box--single {
+  max-width: 500px; /* Perfect width for a multi-field registration form */
+  min-height: auto;
+}
+
+.auth__right--full {
+  width: 100%;
+  max-width: 100%;
+  padding: 40px;
+}
+
+.auth__form-box--wide {
+  max-width: 100% !important; /* Allows inputs to fill the wider register box nicely */
+}
+
+/* Optional: Support side-by-side rows if you use them in your forms */
+.form__row {
+  display: flex;
+  gap: 15px;
+}
+
+.form__row .form__group {
+  flex: 1;
+}
+
+.auth__form-scrollable {
+  max-height: 70vh;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
 /* ─── Responsive ─── */
 @media (max-width: 768px) {
   .auth__left {

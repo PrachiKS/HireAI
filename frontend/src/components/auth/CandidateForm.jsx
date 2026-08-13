@@ -27,7 +27,6 @@ const CandidateForm = () => {
     setLoading(true);
     setError('');
 
-    // Format data before sending
     const formattedSkills = userData.skills 
       ? userData.skills.split(',').map(skill => skill.trim()) 
       : [];
@@ -67,58 +66,58 @@ const CandidateForm = () => {
   };
 
   return (
-    
-      {error && {error}}
+    <form onSubmit={handleSubmit} className="auth__form-scrollable">
+      {error && <div className='auth__error'>{error}</div>}
       
-      
-        
-          Full Name *
-          
-        
-        
-          Email Address *
-          
-        
-      
+      <div className="form__row">
+        <div className='form__group'>
+          <label>Full Name *</label>
+          <input type='text' name='username' placeholder='e.g. Rahul Sharma' onChange={handleChange} required />
+        </div>
+        <div className='form__group'>
+          <label>Email Address *</label>
+          <input type='email' name='email' placeholder='rahul@example.com' onChange={handleChange} required />
+        </div>
+      </div>
 
-      
-        Password *
-        
-      
+      <div className='form__group'>
+        <label>Password *</label>
+        <input type='password' name='password' placeholder='Min 6 characters' onChange={handleChange} required />
+      </div>
 
-      Education & Skills
+      <div className='form__divider'><span>Education & Skills</span></div>
 
-      
-        
-          University / College
-          
-        
-        
-          Graduation Year
-          
-        
-      
+      <div className="form__row">
+        <div className='form__group'>
+          <label>University / College</label>
+          <input type='text' name='university' placeholder='e.g. R.C. Patel Institute' onChange={handleChange} />
+        </div>
+        <div className='form__group'>
+          <label>Graduation Year</label>
+          <input type='text' name='graduationYear' placeholder='e.g. 2026' onChange={handleChange} />
+        </div>
+      </div>
 
-      
-        
-          Degree
-          
-        
-        
-          GitHub / LinkedIn URL
-          
-        
-      
+      <div className="form__row">
+        <div className='form__group'>
+          <label>Degree</label>
+          <input type='text' name='degree' placeholder='e.g. BTech Computer Engg' onChange={handleChange} />
+        </div>
+        <div className='form__group'>
+          <label>GitHub / LinkedIn URL</label>
+          <input type='url' name='portfolioUrl' placeholder='https://github.com/...' onChange={handleChange} />
+        </div>
+      </div>
 
-      
-        Top Skills (comma separated) *
-        
-      
+      <div className='form__group'>
+        <label>Top Skills (comma separated) *</label>
+        <input type='text' name='skills' placeholder='React.js, Node.js, MongoDB' onChange={handleChange} required />
+      </div>
 
-      
+      <button type='submit' className='auth__btn' disabled={loading}>
         {loading ? 'Creating account...' : 'Create Candidate Account'}
-      
-    
+      </button>
+    </form>
   );
 };
 

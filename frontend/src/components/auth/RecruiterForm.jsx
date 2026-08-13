@@ -46,47 +46,47 @@ const RecruiterForm = () => {
   };
 
   return (
-    
-      {error && {error}}
+    <form onSubmit={handleSubmit} className="auth__form-scrollable">
+      {error && <div className='auth__error'>{error}</div>}
 
+      <div className="form__row">
+        <div className='form__group'>
+          <label>Your Name *</label>
+          <input type='text' name='username' placeholder='e.g. Priya Patel' onChange={handleChange} required />
+        </div>
+        <div className='form__group'>
+          <label>Work Email *</label>
+          <input type='email' name='email' placeholder='priya@company.com' onChange={handleChange} required />
+        </div>
+      </div>
       
-        
-          Your Name *
-          
-        
-        
-          Work Email *
-          
-        
-      
-      
-      
-        
-          Password *
-          
-        
-        
-          Your Role / Title *
-          
-        
-      
+      <div className="form__row">
+        <div className='form__group'>
+          <label>Password *</label>
+          <input type='password' name='password' placeholder='Min 6 characters' onChange={handleChange} required />
+        </div>
+        <div className='form__group'>
+          <label>Your Role / Title *</label>
+          <input type='text' name='designation' placeholder='e.g. HR Manager' onChange={handleChange} required />
+        </div>
+      </div>
 
-      Company Details
+      <div className='form__divider'><span>Company Details</span></div>
 
-      
-        Company Name *
-        
-      
+      <div className='form__group'>
+        <label>Company Name *</label>
+        <input type='text' name='company' placeholder='e.g. Futurism Technologies' onChange={handleChange} required />
+      </div>
 
-      
-        Company Website *
-        
-      
+      <div className='form__group'>
+        <label>Company Website *</label>
+        <input type='url' name='companyWebsite' placeholder='https://www.company.com' onChange={handleChange} required />
+      </div>
 
-      
+      <button type='submit' className='auth__btn' disabled={loading}>
         {loading ? 'Creating account...' : 'Create Recruiter Account'}
-      
-    
+      </button>
+    </form>
   );
 };
 
