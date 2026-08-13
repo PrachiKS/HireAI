@@ -1,12 +1,16 @@
-import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { AUTH_URL } from '../utils/config'
 import './Auth.css'
 
 const Login = () => {
-  // 1. ADDED: State to handle which tab is active
-  const [activeRole, setActiveRole] = useState('jobseeker')
+  const [searchParams, setSearchParams] = useSearchParams()
+  
+  const [activeRole, setActiveRole] = useState(() => {
+    return searchParams.get('role') === 'recruiter' ? 'recruiter' : 'jobseeker'
+  })
+
   const [credentials, setCredentials] = useState({
     email: '',
     password: ''
@@ -14,6 +18,18 @@ const Login = () => {
 
   const { loading, error, dispatch } = useAuth()
   const navigate = useNavigate()
+
+  useEffect(() => {
+    const roleFromUrl = searchParams.get('role')
+    if (roleFromUrl && roleFromUrl !== activeRole) {
+      setActiveRole(roleFromUrl === 'recruiter' ? 'recruiter' : 'jobseeker')
+    }
+  }, [searchParams, activeRole])
+
+  const handleRoleChange = (role) => {
+    setActiveRole(role)
+    setSearchParams({ role })
+  }
 
   const handleChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value })
@@ -47,7 +63,6 @@ const Login = () => {
         }
       })
 
-      // Redirect based on role
       if (data.role === 'recruiter') {
         navigate('/recruiter/dashboard')
       } else if (data.role === 'admin') {
@@ -68,7 +83,7 @@ const Login = () => {
     <div className='auth__container'>
       <div className='auth__box'>
 
-        {/* Left Side (Preserved exactly as you wrote it) */}
+        {/* Left Side */}
         <div className='auth__left'>
           <div className='auth__left-content'>
             <h1>Hire<span>AI</span> 🤖</h1>
@@ -97,24 +112,25 @@ const Login = () => {
         {/* Right Side */}
         <div className='auth__right'>
           <div className='auth__form-box'>
-            <h2>Welcome Back!</h2>
-            <p className='auth__subtitle'>Login to your HireAI account</p>
+            
+            <h2>Login as {activeRole === 'jobseeker' ? 'Job Seeker' : 'Recruiter'}</h2>
+            <p className='auth__subtitle'>Welcome back to your account</p>
 
             {error && <div className='auth__error'>{error}</div>}
 
-            {/* 2. ADDED: Role Selector Tabs right above the form */}
+            {/* Role Selector Tabs */}
             <div className='role__selector'>
               <button
                 type='button'
                 className={`role__btn ${activeRole === 'jobseeker' ? 'active' : ''}`}
-                onClick={() => setActiveRole('jobseeker')}
+                onClick={() => handleRoleChange('jobseeker')}
               >
                 👤 Job Seeker
               </button>
               <button
                 type='button'
                 className={`role__btn ${activeRole === 'recruiter' ? 'active' : ''}`}
-                onClick={() => setActiveRole('recruiter')}
+                onClick={() => handleRoleChange('recruiter')}
               >
                 🏢 Recruiter
               </button>
@@ -126,7 +142,7 @@ const Login = () => {
                 <input
                   type='email'
                   name='email'
-                  autoComplete='email' /* Added for autocomplete fix */
+                  autoComplete='email'
                   placeholder='Enter your email'
                   value={credentials.email}
                   onChange={handleChange}
@@ -139,7 +155,7 @@ const Login = () => {
                 <input
                   type='password'
                   name='password'
-                  autoComplete='current-password' /* Added for autocomplete fix */
+                  autoComplete='current-password'
                   placeholder='Enter your password'
                   value={credentials.password}
                   onChange={handleChange}
@@ -156,8 +172,7 @@ const Login = () => {
                 className='auth__btn'
                 disabled={loading}
               >
-                {/* 3. ADDED: Dynamic button text updates based on tab */}
-                {loading ? 'Logging in...' : `Login as ${activeRole === 'jobseeker' ? 'Candidate' : 'Recruiter'}`}
+                {loading ? 'Logging in...' : `Login as ${activeRole === 'jobseeker' ? 'Job Seeker' : 'Recruiter'}`}
               </button>
 
               <div className='auth__divider'>
@@ -177,7 +192,6 @@ const Login = () => {
 
             <p className='auth__switch'>
               Don't have an account?{' '}
-              {/* 4. ADDED: Smart register link passes the selected role */}
               <Link to={`/register?role=${activeRole}`}>Sign up free</Link>
             </p>
           </div>
