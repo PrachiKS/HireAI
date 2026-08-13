@@ -48,7 +48,19 @@ export const register = async (req, res) => {
   }
 
   try {
-    const { username, email, password, role } = req.body
+    // 1. Destructure all new and existing fields from req.body
+    const { 
+      username, 
+      email, 
+      password, 
+      role, 
+      skills, 
+      portfolioUrl, 
+      education, 
+      company, 
+      companyWebsite, 
+      designation 
+    } = req.body
 
     // Check existing user
     const existingUser = await User.findOne({
@@ -64,21 +76,26 @@ export const register = async (req, res) => {
       })
     }
 
-    // Hash password
     const salt = bcrypt.genSaltSync(12)
     const hashedPassword = bcrypt.hashSync(password, salt)
 
-    // Create user
+    // 2. Create user with professional fields populated based on role
     const newUser = new User({
       username,
       email,
       password: hashedPassword,
-      role: role || 'jobseeker'
+      role: role || 'jobseeker',
+      skills: skills || [],
+      portfolioUrl: portfolioUrl || '',
+      education: education || { university: '', degree: '', graduationYear: '' },
+      company: company || '',
+      companyWebsite: companyWebsite || '',
+      designation: designation || ''
     })
 
     await newUser.save()
 
-    // Generate tokens
+   // Generate tokens
     const { accessToken, refreshToken } = generateTokens(newUser)
 
     // Save refresh token
@@ -100,6 +117,7 @@ export const register = async (req, res) => {
     })
 
   } catch (err) {
+    console.error('Registration Error:', err)
     res.status(500).json({
       success: false,
       message: 'Failed to create account. Please try again.'
