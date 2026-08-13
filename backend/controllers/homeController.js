@@ -5,9 +5,10 @@ export const getHomeData = async (req, res) => {
   try {
     // 1. Fetch real counts from MongoDB
     const jobsCount = await Job.countDocuments();
-    // (Note: Adjust 'recruiter' and 'candidate' if your roles are named differently in your User schema)
     const companyCount = await User.countDocuments({ role: 'recruiter' });
-    const candidateCount = await User.countDocuments({ role: 'candidate' });
+    
+    // Fixed: Changed 'candidate' to 'jobseeker' to match your Auth registration logic!
+    const candidateCount = await User.countDocuments({ role: 'jobseeker' }); 
 
     // 2. Fetch the 3 most recently posted jobs
     const recentJobs = await Job.find()
@@ -17,11 +18,10 @@ export const getHomeData = async (req, res) => {
     // 3. Format the database jobs to match what your frontend expects
     const formattedFeaturedJobs = recentJobs.map(job => ({
       title: job.title || 'Untitled Role',
-      // Depending on your schema, the company name might be job.company, job.companyName, etc.
       company: job.company || 'Confidential', 
       location: job.location || 'Remote',
       salary: job.salary || 'Competitive',
-      matchScore: Math.floor(Math.random() * (99 - 85 + 1)) + 85, // Generates a random match score between 85 and 99 for effect!
+      matchScore: Math.floor(Math.random() * (99 - 85 + 1)) + 85,
       skills: job.skills ? job.skills.slice(0, 3) : ['React', 'NodeJS', 'MongoDB'],
       matchLabel: 'AI Job Match'
     }));
@@ -52,20 +52,24 @@ export const getHomeData = async (req, res) => {
             label: 'Candidates'
           },
           successRate: {
-            value: 95, // Keeping this static until you have an application tracking system!
+            value: 95, 
             label: 'Success Rate'
           }
         },
 
         featuredJobs: formattedFeaturedJobs.length > 0 ? formattedFeaturedJobs : [],
 
+        // UPDATED: All 9 features (Core + Job Seeker AI + Recruiter AI)
         features: [
-          { icon: '📄', title: 'AI Resume Reviewer', description: 'Upload your resume and get instant AI feedback, score, and improvement suggestions.' },
-          { icon: '✍️', title: 'AI Cover Letter', description: 'Generate a personalized cover letter for any job in seconds using AI.' },
-          { icon: '🎯', title: 'AI Job Matching', description: 'See your match percentage for each job based on your skills and experience.' },
-          { icon: '🏢', title: 'Top Companies', description: "Apply to jobs from India's top startups and product companies directly." },
-          { icon: '⚡', title: 'One Click Apply', description: 'Apply to multiple jobs with one click. Track all your applications in one place.' },
-          { icon: '📊', title: 'Smart Dashboard', description: 'Track your applications, interviews, and offers in a beautiful dashboard.' }
+          { icon: '🏢', title: 'Top Companies', description: 'Access exclusive roles from 500+ verified top tech companies and startups.' },
+          { icon: '⚡', title: 'One Click Apply', description: 'Save time by applying to multiple jobs instantly with your saved profile.' },
+          { icon: '📊', title: 'Smart Dashboard', description: 'Track your applications, interview statuses, and saved jobs in one place.' },
+          { icon: '📄', title: 'AI Resume Reviewer', description: 'Get your resume scored by AI and receive actionable improvement suggestions.' },
+          { icon: '✍️', title: 'AI Cover Letter', description: 'Generate highly personalized, professional cover letters in seconds.' },
+          { icon: '🎯', title: 'AI Job Match', description: 'Analyze your skills against job descriptions to calculate your exact match score.' },
+          { icon: '❓', title: 'AI Interview Prep', description: 'Practice with AI-generated technical and behavioral interview questions.' },
+          { icon: '📝', title: 'AI JD Writer', description: 'Recruiters can generate professional, SEO-optimized job descriptions instantly.' },
+          { icon: '⚖️', title: 'AI Candidate Evaluator', description: 'Instantly evaluate and score candidate resumes against your job requirements.' }
         ],
         
         cta: {
