@@ -1,26 +1,31 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import CandidateForm from '../components/auth/CandidateForm'
 import RecruiterForm from '../components/auth/RecruiterForm'
 import './Auth.css'
 
 const Register = () => {
- const location = useLocation()
+  // 1. Use searchParams to both read AND write to the URL
+  const [searchParams, setSearchParams] = useSearchParams()
 
-  // 1. Initialize state by reading the URL once
   const [activeRole, setActiveRole] = useState(() => {
-    const params = new URLSearchParams(location.search)
-    return params.get('role') === 'recruiter' ? 'recruiter' : 'jobseeker'
+    return searchParams.get('role') === 'recruiter' ? 'recruiter' : 'jobseeker'
   })
 
-  // 2. Keep synced if the URL changes, depending safely on the string location.search
+  // 2. Keep state synced if the user hits the browser's Back/Forward buttons
   useEffect(() => {
-    const params = new URLSearchParams(location.search)
-    const roleFromUrl = params.get('role')
-    if (roleFromUrl) {
+    const roleFromUrl = searchParams.get('role')
+    if (roleFromUrl && roleFromUrl !== activeRole) {
       setActiveRole(roleFromUrl === 'recruiter' ? 'recruiter' : 'jobseeker')
     }
-  }, [location.search]) // 👈 Safely depending on the search string
+  }, [searchParams, activeRole])
+
+  // 3. New function to change the tab AND update the URL instantly
+  const handleRoleChange = (role) => {
+    setActiveRole(role)
+    setSearchParams({ role }) // 👈 This magically updates the URL to ?role=...
+  }
+
   return (
     <div className='auth__container auth__container--register'>
       <div className='auth__box auth__box--single'>
@@ -35,14 +40,14 @@ const Register = () => {
               <button
                 type='button'
                 className={`role__btn ${activeRole === 'jobseeker' ? 'active' : ''}`}
-                onClick={() => setActiveRole('jobseeker')}
+                onClick={() => handleRoleChange('jobseeker')}
               >
                 👤 Job Seeker
               </button>
               <button
                 type='button'
                 className={`role__btn ${activeRole === 'recruiter' ? 'active' : ''}`}
-                onClick={() => setActiveRole('recruiter')}
+                onClick={() => handleRoleChange('recruiter')}
               >
                 🏢 Recruiter
               </button>
@@ -51,7 +56,7 @@ const Register = () => {
             {/* Render the correct form */}
             {activeRole === 'jobseeker' ? <CandidateForm /> : <RecruiterForm />}
 
-            <p className='auth__switch'>
+            <p className='auth__switch' style={{ marginTop: '20px' }}>
               Already have an account?{' '}
               <Link to='/login'>Login here</Link>
             </p>

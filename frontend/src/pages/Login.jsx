@@ -5,6 +5,8 @@ import { AUTH_URL } from '../utils/config'
 import './Auth.css'
 
 const Login = () => {
+  // 1. ADDED: State to handle which tab is active
+  const [activeRole, setActiveRole] = useState('jobseeker')
   const [credentials, setCredentials] = useState({
     email: '',
     password: ''
@@ -66,7 +68,7 @@ const Login = () => {
     <div className='auth__container'>
       <div className='auth__box'>
 
-        {/* Left Side */}
+        {/* Left Side (Preserved exactly as you wrote it) */}
         <div className='auth__left'>
           <div className='auth__left-content'>
             <h1>Hire<span>AI</span> 🤖</h1>
@@ -100,12 +102,31 @@ const Login = () => {
 
             {error && <div className='auth__error'>{error}</div>}
 
+            {/* 2. ADDED: Role Selector Tabs right above the form */}
+            <div className='role__selector'>
+              <button
+                type='button'
+                className={`role__btn ${activeRole === 'jobseeker' ? 'active' : ''}`}
+                onClick={() => setActiveRole('jobseeker')}
+              >
+                👤 Job Seeker
+              </button>
+              <button
+                type='button'
+                className={`role__btn ${activeRole === 'recruiter' ? 'active' : ''}`}
+                onClick={() => setActiveRole('recruiter')}
+              >
+                🏢 Recruiter
+              </button>
+            </div>
+
             <form onSubmit={handleSubmit}>
               <div className='form__group'>
                 <label>Email Address</label>
                 <input
                   type='email'
                   name='email'
+                  autoComplete='email' /* Added for autocomplete fix */
                   placeholder='Enter your email'
                   value={credentials.email}
                   onChange={handleChange}
@@ -118,6 +139,7 @@ const Login = () => {
                 <input
                   type='password'
                   name='password'
+                  autoComplete='current-password' /* Added for autocomplete fix */
                   placeholder='Enter your password'
                   value={credentials.password}
                   onChange={handleChange}
@@ -134,7 +156,8 @@ const Login = () => {
                 className='auth__btn'
                 disabled={loading}
               >
-                {loading ? 'Logging in...' : 'Login'}
+                {/* 3. ADDED: Dynamic button text updates based on tab */}
+                {loading ? 'Logging in...' : `Login as ${activeRole === 'jobseeker' ? 'Candidate' : 'Recruiter'}`}
               </button>
 
               <div className='auth__divider'>
@@ -154,7 +177,8 @@ const Login = () => {
 
             <p className='auth__switch'>
               Don't have an account?{' '}
-              <Link to='/register'>Sign up free</Link>
+              {/* 4. ADDED: Smart register link passes the selected role */}
+              <Link to={`/register?role=${activeRole}`}>Sign up free</Link>
             </p>
           </div>
         </div>
