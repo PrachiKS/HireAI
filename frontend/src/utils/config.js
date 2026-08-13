@@ -6,3 +6,4 @@ export const AUTH_URL = `${BASE_URL}/auth`
 export const JOBS_URL = `${BASE_URL}/jobs`
 export const APPLICATIONS_URL = `${BASE_URL}/applications`
 export const AI_URL = `${BASE_URL}/ai`
+export const HOME_URL = `${BASE_URL}/home`

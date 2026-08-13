@@ -1,8 +1,8 @@
-import express from 'express'
-import { getHomeData } from '../controllers/homeController.js'
+import express from 'express';
+import { getHomeData } from '../controllers/homeController.js'; // MUST have .js extension
 
-const router = express.Router()
+const router = express.Router();
 
-router.get('/', getHomeData)
+router.get('/', getHomeData);
 
-export default router
+export default router;
