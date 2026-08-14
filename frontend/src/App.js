@@ -9,7 +9,7 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import Jobs from './pages/Jobs'
 import JobDetail from './pages/JobDetail'
-import Dashboard from './pages/Dashboard'
+import JobSeekerDashboard from './pages/JobSeekerDashboard'
 import RecruiterDashboard from './pages/RecruiterDashboard'
 import AITools from './pages/AITools'
 
@@ -23,7 +23,7 @@ function App() {
         <Route path='/register' element={<Register />} />
         <Route path='/jobs' element={<Jobs />} />
         <Route path='/jobs/:id' element={<JobDetail />} />
-        <Route path='/dashboard' element={<Dashboard />} />
+        <Route path='/jobseeker/dashboard' element={<JobSeekerDashboard />} />
         <Route path='/recruiter/dashboard' element={<RecruiterDashboard />} />
         <Route path='/ai-tools' element={<AITools />} />
       </Routes>

@@ -68,7 +68,7 @@ const Login = () => {
       } else if (data.role === 'admin') {
         navigate('/admin/dashboard')
       } else {
-        navigate('/')
+        navigate('/jobseeker/dashboard')
       }
 
     } catch (err) {

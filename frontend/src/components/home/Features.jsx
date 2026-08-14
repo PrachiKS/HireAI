@@ -19,7 +19,12 @@ const Features = ({ featuresData }) => {
     // 2. Dashboard routing
     if (feature.title === 'Smart Dashboard') {
       if (user) {
-        navigate('/dashboard')
+        // Check their role to send them to the correct new dashboard path
+        if (user.role === 'recruiter') {
+          navigate('/recruiter/dashboard')
+        } else {
+          navigate('/jobseeker/dashboard') // 👈 Changed from '/dashboard'
+        }
       } else {
         navigate('/login')
       }
@@ -33,7 +38,7 @@ const Features = ({ featuresData }) => {
     } else {
       // If not logged in, check which tool they clicked to pre-select the right tab!
       if (
-        feature.title === 'AI JD Writer' || 
+        feature.title === 'AI JD Writer' ||
         feature.title === 'AI Candidate Evaluator'
       ) {
         // Route to Recruiter login tab

@@ -38,7 +38,7 @@ const Navbar = () => {
         <li><NavLink to='/jobs'>Jobs</NavLink></li>
         <li><NavLink to='/ai-tools'>🤖 AI Tools</NavLink></li>
         {user && role === 'jobseeker' && (
-          <li><NavLink to='/dashboard'>Dashboard</NavLink></li>
+          <li><NavLink to='/jobseeker/dashboard'>Dashboard</NavLink></li>
         )}
         {user && role === 'recruiter' && (
           <li><NavLink to='/recruiter/dashboard'>Dashboard</NavLink></li>

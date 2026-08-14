@@ -2,9 +2,9 @@ import React, { useState, useEffect, useCallback } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { APPLICATIONS_URL, AUTH_URL } from '../utils/config'
-import './Dashboard.css'
+import './JobSeekerDashboard.css'
 
-const Dashboard = () => {
+const JobSeekerDashboard = () => {
   const { user, dispatch } = useAuth()
   const navigate = useNavigate()
 
@@ -93,10 +93,10 @@ const Dashboard = () => {
 
   // ✅ Stats
   const stats = {
-    total: applications.length,
-    pending: applications.filter(a => a.status === 'pending').length,
-    shortlisted: applications.filter(a => a.status === 'shortlisted').length,
-    hired: applications.filter(a => a.status === 'hired').length,
+    total: applications?.length || 0,
+    pending: applications?.filter(a => a.status === 'pending')?.length || 0,
+    shortlisted: applications?.filter(a => a.status === 'shortlisted')?.length || 0,
+    hired: applications?.filter(a => a.status === 'hired')?.length || 0,
   }
 
   if (!user) return null
@@ -308,4 +308,4 @@ const Dashboard = () => {
   )
 }
 
-export default Dashboard
+export default JobSeekerDashboard
