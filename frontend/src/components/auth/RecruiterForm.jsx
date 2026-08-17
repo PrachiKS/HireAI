@@ -52,11 +52,11 @@ const RecruiterForm = () => {
       <div className="form__row">
         <div className='form__group'>
           <label>Your Name *</label>
-          <input type='text' name='username' placeholder='e.g. Priya Patel' onChange={handleChange} required />
+          <input type='text' name='username' placeholder='Enter your full name' onChange={handleChange} required />
         </div>
         <div className='form__group'>
           <label>Work Email *</label>
-          <input type='email' name='email' placeholder='priya@company.com' onChange={handleChange} required />
+          <input type='email' name='email' placeholder='Enter your work email' onChange={handleChange} required />
         </div>
       </div>
       
@@ -75,7 +75,7 @@ const RecruiterForm = () => {
 
       <div className='form__group'>
         <label>Company Name *</label>
-        <input type='text' name='company' placeholder='e.g. Futurism Technologies' onChange={handleChange} required />
+        <input type='text' name='company' placeholder='Company Name' onChange={handleChange} required />
       </div>
 
       <div className='form__group'>

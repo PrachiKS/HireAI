@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { APPLICATIONS_URL, AUTH_URL } from '../utils/config'
+import { APPLICATIONS_URL, AUTH_URL } from'../utils/config'
+import JobSeekerProfile from '../components/Dashboard/JobSeekerProfile'
 import './JobSeekerDashboard.css'
+
 
 const JobSeekerDashboard = () => {
   const { user, dispatch } = useAuth()
@@ -258,32 +260,7 @@ const JobSeekerDashboard = () => {
 
         {/* ─── Profile Tab ─── */}
         {activeTab === 'profile' && (
-          <div className='dashboard__section'>
-            <div className='section__header'>
-              <h2>My Profile</h2>
-            </div>
-            <div className='profile__card'>
-              <div className='profile__field'>
-                <label>Username</label>
-                <p>{user.username}</p>
-              </div>
-              <div className='profile__field'>
-                <label>Email</label>
-                <p>{user.email}</p>
-              </div>
-              <div className='profile__field'>
-                <label>Role</label>
-                <p>{user.role}</p>
-              </div>
-              <div className='profile__field'>
-                <label>Member Since</label>
-                <p>{new Date(user.createdAt).toLocaleDateString('en-IN')}</p>
-              </div>
-              <div className='profile__coming-soon'>
-                🚧 Profile editing coming soon!
-              </div>
-            </div>
-          </div>
+            <JobSeekerProfile/>
         )}
 
         {/* ─── Saved Jobs Tab ─── */}

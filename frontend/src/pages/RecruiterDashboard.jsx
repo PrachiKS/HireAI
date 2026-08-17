@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { JOBS_URL, APPLICATIONS_URL, AUTH_URL } from '../utils/config'
+import RecruiterProfile from '../components/Dashboard/RecruiterProfile'
 import './RecruiterDashboard.css'
 
 const RecruiterDashboard = () => {
@@ -240,6 +241,12 @@ const RecruiterDashboard = () => {
             onClick={() => setActiveTab('applications')}
           >
             📋 Applications
+          </button>
+          <button
+            className={`nav__item ${activeTab === 'profile' ? 'active' : ''}`}
+            onClick={() => setActiveTab('profile')}
+          >
+            👤 My Profile
           </button>
           <button
             className={`nav__item ${showPostJob ? 'active' : ''}`}
@@ -640,7 +647,10 @@ const RecruiterDashboard = () => {
             )}
           </div>
         )}
-
+        {/* ─── Profile Tab ─── */}
+        {activeTab === 'profile' && !showPostJob && (
+          <RecruiterProfile />
+        )}
       </div>
     </div>
   )

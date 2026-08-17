@@ -5,9 +5,11 @@ import {
   register,
   login,
   logout,
-  getMe
+  getMe,
+  updateProfile // 👈 1. Added this import
 } from '../controllers/authController.js'
 import verifyToken from '../middleware/verifyToken.js'
+import { upload } from '../middleware/upload.js' // 👈 2. Added this import
 
 const router = express.Router()
 
@@ -53,5 +55,12 @@ router.post('/register', authLimiter, registerValidation, register)
 router.post('/login', authLimiter, loginValidation, login)
 router.post('/logout', verifyToken, logout)
 router.get('/me', verifyToken, getMe)
+
+// 👇 3. Added the new Profile Route here
+router.put('/profile', verifyToken, upload.fields([
+  { name: 'photo', maxCount: 1 },
+  { name: 'resume', maxCount: 1 },
+  { name: 'certificate', maxCount: 1 }
+]), updateProfile)
 
 export default router

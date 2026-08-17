@@ -72,11 +72,11 @@ const CandidateForm = () => {
       <div className="form__row">
         <div className='form__group'>
           <label>Full Name *</label>
-          <input type='text' name='username' placeholder='e.g. Rahul Sharma' onChange={handleChange} required />
+          <input type='text' name='username' placeholder='Enter your full name' onChange={handleChange} required />
         </div>
         <div className='form__group'>
           <label>Email Address *</label>
-          <input type='email' name='email' placeholder='rahul@example.com' onChange={handleChange} required />
+          <input type='email' name='email' placeholder='Enter your email address' onChange={handleChange} required />
         </div>
       </div>
 
@@ -90,7 +90,7 @@ const CandidateForm = () => {
       <div className="form__row">
         <div className='form__group'>
           <label>University / College</label>
-          <input type='text' name='university' placeholder='e.g. R.C. Patel Institute' onChange={handleChange} />
+          <input type='text' name='university' placeholder='Enter your university or college name' onChange={handleChange} />
         </div>
         <div className='form__group'>
           <label>Graduation Year</label>

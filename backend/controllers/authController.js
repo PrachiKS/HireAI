@@ -1,4 +1,5 @@
 import User from '../models/User.js'
+import cloudinary from '../utils/cloudinary.js'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import { validationResult } from 'express-validator'
@@ -8,7 +9,7 @@ const generateTokens = (user) => {
   const accessToken = jwt.sign(
     { id: user._id, role: user.role },
     process.env.JWT_SECRET_KEY,
-    { expiresIn: '15m' }
+    { expiresIn: '15m' }  
   )
 
   const refreshToken = jwt.sign(
@@ -218,6 +219,73 @@ export const getMe = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Failed to fetch user'
+    })
+  }
+}
+
+const uploadToCloudinary = (fileBuffer, folder, resourceType = 'auto') => {
+  return new Promise((resolve, reject) => {
+    const uploadStream = cloudinary.uploader.upload_stream(
+      { folder: folder, resource_type: resourceType },
+      (error, result) => {
+        if (error) return reject(error)
+        resolve(result.secure_url)
+      }
+    )
+    uploadStream.end(fileBuffer)
+  })
+}
+
+// Update Profile (Handles Text & Files)
+export const updateProfile = async (req, res) => {
+  try {
+    // 1. Extract text data from req.body
+    let updateData = { ...req.body }
+
+    // Parse the stringified skills array back into a real array
+    if (updateData.skills && typeof updateData.skills === 'string') {
+      updateData.skills = JSON.parse(updateData.skills)
+    }
+    if (updateData.education && typeof updateData.education === 'string') {
+      try {
+        updateData.education = JSON.parse(updateData.education)
+      } catch (e) {
+        delete updateData.education // Ignore if parsing fails
+      }
+    }
+
+    // 2. Handle File Uploads (if they exist in req.files)
+    if (req.files) {
+      if (req.files.photo) {
+        updateData.photo = await uploadToCloudinary(req.files.photo[0].buffer, 'hireai/photos', 'image')
+      }
+      if (req.files.resume) {
+        // resourceType 'auto' handles PDFs perfectly
+        updateData.resumeUrl = await uploadToCloudinary(req.files.resume[0].buffer, 'hireai/resumes', 'auto')
+      }
+      if (req.files.certificate) {
+        updateData.certificateUrl = await uploadToCloudinary(req.files.certificate[0].buffer, 'hireai/certificates', 'auto')
+      }
+    }
+
+    // 3. Update User in MongoDB
+    const updatedUser = await User.findByIdAndUpdate(
+      req.user.id,
+      { $set: updateData },
+      { returnDocument: 'after', runValidators: true }
+    ).select('-password')
+
+    res.status(200).json({
+      success: true,
+      message: 'Profile updated successfully!',
+      data: updatedUser
+    })
+
+  } catch (error) {
+    console.error("Profile Update Error:", error)
+    res.status(500).json({
+      success: false,
+      message: 'Failed to update profile. Please try again.'
     })
   }
 }
